@@ -1,1 +1,1 @@
-<p align="center">Commands to Run this Project will be added soon!</p>
+<p align="center">Commands to run this project will be added soon!</p>
