@@ -12,7 +12,7 @@
                         <div>
                             <b-button v-b-modal.modal-1>Add Banner Image</b-button>
 
-                            <b-modal id="modal-1" title="BootstrapVue">
+                            <b-modal id="modal-1" title="Add Banner Image">
                                 <b-form-file v-model="file" ref="file-input" class="mb-2"></b-form-file>
                                 <b-button @click="file = null">Reset</b-button>
 
@@ -28,7 +28,7 @@
                                 <div class="mt-4 d-flex justify-content-center">
                                     <div class="mr-2">
                                         <b-button v-b-modal.modal-2>Update</b-button>
-                                        <b-modal id="modal-2" title="BootstrapVue">
+                                        <b-modal id="modal-2" title="Update Banner">
                                             <b-form-file v-model="file" ref="file-input" class="mb-2"></b-form-file>
                                             <b-button @click="file = null">Reset</b-button>
 

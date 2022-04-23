@@ -12,7 +12,7 @@
                         <div>
                             <b-button v-b-modal.modal-4>Add Store</b-button>
 
-                            <b-modal id="modal-4" title="BootstrapVue">
+                            <b-modal id="modal-4" title="Add Store">
                                 <b-form-textarea id="textarea-default" class="mb-2" placeholder="Store Description"></b-form-textarea>
                                 <b-form-file v-model="file" ref="file-input" class="mb-2"></b-form-file>
                                 <b-button @click="file = null">Reset</b-button>
@@ -29,7 +29,7 @@
                                 <div class="mt-4 d-flex justify-content-center">
                                     <div class="mr-2">
                                         <b-button v-b-modal.modal-5>Update</b-button>
-                                        <b-modal id="modal-5" title="BootstrapVue">
+                                        <b-modal id="modal-5" title="Update Store">
                                             <b-form-textarea id="textarea-default" class="mb-2" placeholder="Store Description"></b-form-textarea>
                                             <b-form-file v-model="file" ref="file-input" class="mb-2"></b-form-file>
                                             <b-button @click="file = null">Reset</b-button>
@@ -40,7 +40,7 @@
                                     <div>
                                         <b-button v-b-modal.modal-6>Delete</b-button>
                                         <b-modal id="modal-6" title="BootstrapVue">
-                                            <p class="text-center">Do you want to delete this image?</p>
+                                            <p class="text-center">Do you want to delete this Store?</p>
                                         </b-modal>
                                     </div>
                                 </div>
