@@ -14,23 +14,28 @@ export default {
         },
         {
             path: '/dashboard',
+            name: 'dashboard',
             component: Dashboard
         },
         {
             path: '/banner',
+            name: 'banner',
             component: Banner
         },
         {
             path: '/store',
+            name: 'store',
             component: Store
         },
         {
             path: '/testimonial',
+            name: 'testimonial',
             component: Testimonial
         },
         {
             path: '/faqs',
+            name: 'faqs',
             component: FAQs
-        },
+        }
     ]
 }
