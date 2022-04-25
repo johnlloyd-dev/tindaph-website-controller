@@ -15,8 +15,9 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        $testimony = Testimonial::all();
-        return view('home',compact('testimony'));
+        $products = Testimonial::orderby('id', 'asc')->get();
+
+        return response()->json($products);
     }
 
     /**

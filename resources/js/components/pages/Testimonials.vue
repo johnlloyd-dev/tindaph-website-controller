@@ -55,7 +55,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(item, index) in testimonyList" :key="item.id">
+                                        <tr v-for="(item, index) of products" :key="item.id">
                                             <td>{{ item.witness }}</td>
                                             <td>{{ item.testimonial }}</td>
                                             <td>
@@ -112,7 +112,7 @@
         props: ['testimony'],
         data() {
             return {
-                testimonyList: this.testimony,
+                products: {},
                 form: {
                     witness: null,
                     testimonial: null,
@@ -124,15 +124,25 @@
                 selectedId: null
             }
         },
+        created() {
+            this.getProducts();
+        },
         methods: {
+            getProducts() {
+              this.axios.get('/api/testimonial')
+                  .then(response => {
+                      this.products = response.data;
+                  });
+            },
             submit() {
                 $('#addTestimonial').modal('hide');
                 const vm = this;
-                axios.post('/testimonial', this.form)
+                axios.post('/api/testimonial', this.form)
                     .then(function (response) {
-                        vm.testimonyList.push(response.data.data);
-                        vm.form.witness = null
-                        vm.form.testimonial = null
+                        vm.products.push(response.data.data);
+                        vm.form.witness = null;
+                        vm.form.testimonial = null;
+                        swal("Add Success!", "A testimony has been added successfully!", "success");
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -142,16 +152,16 @@
                 console.log(item)
                 this.formEdit.witness = item.witness;
                 this.formEdit.testimonial = item.testimonial;
-                this.selectedId = item.id
+                this.selectedId = item.id;
                 $('#editModal').modal('show');
 
             },
             save() {
                 $('#editModal').modal('hide');
                 const vm = this;
-                axios.put(`/testimonial/${vm.selectedId}`, this.formEdit)
+                axios.put(`/api/testimonial/${vm.selectedId}`, this.formEdit)
                     .then(function (response) {
-                        alert('Testimony has been sucessfully saved')
+                        swal("Update Success!", "This testimony has been updated successfully!", "success");
                         location.reload();
                     })
                     .catch(function (error) {
@@ -160,9 +170,10 @@
             },
             remove(item, index) {
                 const vm = this;
-                axios.delete(`/testimonial/${item.id}`)
+                axios.delete(`/api/testimonial/${item.id}`)
                     .then(function (response) {
-                        vm.testimonyList.splice(index, 1)
+                        vm.products.splice(index, 1);
+                        swal("Delete Success!", "This testimony has been deleted successfully!", "success");
                     })
                     .catch(function (error) {
                         console.log(error)

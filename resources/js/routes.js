@@ -6,6 +6,7 @@ import Dashboard from './components/pages/Dashboard';
 import NotFound from './components/pages/NotFound';
 export default {
     mode: 'history',
+    historyApiFallback: true,
     linkActiveClass: 'nav-class font-weight-bold',
     routes: [
         {

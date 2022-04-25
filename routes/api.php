@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\FaqsController;
+use App\Http\Controllers\TestimonialController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,6 +17,7 @@ use App\Http\Controllers\FaqsController;
 */
 
 Route::middleware('api')->group(function () {
+    Route::resource('testimonial', TestimonialController::class);
     Route::resource('faqs', FaqsController::class);
 });
 

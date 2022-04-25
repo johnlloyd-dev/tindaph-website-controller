@@ -59,7 +59,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(item, key) of products" v-bind:key="key">
+                                        <tr v-for="(item, index) of products" :key="item.id">
                                             <td>{{ item.question }}</td>
                                             <td>{{ item.answer }}</td>
                                             <td>
@@ -134,8 +134,8 @@
             this.getProducts();
         },
         methods: {
-        getProducts() {
-              this.axios.get('http://127.0.0.1:8000/api/faqs')
+            getProducts() {
+              this.axios.get('/api/faqs')
                   .then(response => {
                       this.products = response.data;
                   });
@@ -143,11 +143,12 @@
             submit() {
                 $('#addFAQ').modal('hide');
                 const vm = this;
-                axios.post('/faqs', this.form)
+                axios.post('/api/faqs', this.form)
                     .then(function (response) {
-                        vm.faqsList.push(response.data.data);
-                        vm.form.question = null
-                        vm.form.answer = null
+                        vm.products.push(response.data.data);
+                        vm.form.question = null;
+                        vm.form.answer = null;
+                        swal("Add Success!", "A faq has been added successfully!", "success");
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -164,9 +165,9 @@
             save() {
                 $('#editFaqs').modal('hide');
                 const vm = this;
-                axios.put(`/faqs/${vm.selectedId}`, this.formEdit)
+                axios.put(`/api/faqs/${vm.selectedId}`, this.formEdit)
                     .then(function (response) {
-                        alert('Faqs has been sucessfully saved')
+                        swal("Update Success!", "This faq has been updated successfully!", "success");
                         location.reload();
                     })
                     .catch(function (error) {
@@ -175,9 +176,10 @@
             },
             remove(item, index) {
                 const vm = this;
-                axios.delete(`/faqs/${item.id}`)
+                axios.delete(`/api/faqs/${item.id}`)
                     .then(function (response) {
-                        vm.faqsList.splice(index, 1)
+                        vm.products.splice(index, 1);
+                        swal("Delete Success!", "This faq has been deleted successfully!", "success");
                     })
                     .catch(function (error) {
                         console.log(error)

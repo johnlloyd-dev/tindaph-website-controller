@@ -1,6 +1,6 @@
 <template>
     <div>
-        <ul class="navbar-nav h-100 bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav h-100 bg-gradient-secondary sidebar sidebar-dark accordion" id="accordionSidebar">
             <router-link class="sidebar-brand d-flex align-items-center justify-content-center" to="/dashboard">
                 <img src="/img/tinda-logo.png" width="30">
                 <div class="sidebar-brand-text mx-3">tinda PAPALIT</div>

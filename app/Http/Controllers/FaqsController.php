@@ -71,11 +71,12 @@ class FaqsController extends Controller
      * @param  \App\Models\Faqs  $faqs
      * @return \Illuminate\Http\Response
      */
-    public function update(FaqsPostRequest $faqsRequest, Faqs $faqs)
+    public function update(FaqsPostRequest $faqsRequest, $id)
     {
         try {
-            $faqs = $faqs->update($faqsRequest->all());
-            return response()->json(['message' => 'Faqs has been sucessfully saved', 'data' => $faqs]);
+            $faq = Faqs::find($id);
+            $posting = $faq->update($faqsRequest->all());
+            return response()->json(['message' => 'Faqs has been sucessfully saved', 'data' => $posting]);
         } catch(\Exception $e) {
             return response()->json(['message' => $e->getMessage()]);
         }
@@ -87,8 +88,9 @@ class FaqsController extends Controller
      * @param  \App\Models\Faqs  $faqs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Faqs $faqs)
+    public function destroy($id)
     {
+        $faqs = Faqs::find($id);
         $faqs->delete();
         return response()->json(['message' => 'Testimony has been sucessfully deleted']);
     }
