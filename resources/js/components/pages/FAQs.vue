@@ -10,37 +10,98 @@
                     </div>
                     <div class="mb-4">
                         <div>
-                            <b-button v-b-modal.modal-4>Add FAQs</b-button>
-
-                            <b-modal id="modal-4" title="Add FAQs">
-                                <b-form-input id="input-small" class="mb-2" placeholder="Question">
-                                </b-form-input>
-                                <b-form-textarea id="textarea-default" class="mb-2" placeholder="Answer">
-                                </b-form-textarea>
-                            </b-modal>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#addFAQ">
+                                Add FAQ
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="addFAQ" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="addFAQLabel">Modal title</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <input type="email" class="form-control" placeholder="Enter Question"
+                                                    v-model="form.question">
+                                            </div>
+                                            <div class="mb-3">
+                                                <textarea class="form-control" rows="3" placeholder="Enter Answer"
+                                                    v-model="form.answer"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" @click="submit"
+                                                class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <h3>Table for FAQs</h3>
                     <div class="row">
                         <div class="col-lg-12">
                             <div>
-                                <b-table striped hover :items="items" :fields="fields"></b-table>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th width="150" scope="col">Question</th>
+                                            <th width="800" scope="col">Answer</th>
+                                            <th width="100" scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, key) of products" v-bind:key="key">
+                                            <td>{{ item.question }}</td>
+                                            <td>{{ item.answer }}</td>
+                                            <td>
+                                                <button class="btn btn-secondary btn-sm" @click="edit(item)"><i
+                                                        class="fa fa-edit"></i></button>
+                                                <button class="btn btn-danger btn-sm" @click="remove(item,index)"><i
+                                                        class="fa fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="mt-4 d-flex justify-content-center">
-                                <div class="mr-2">
-                                    <b-button v-b-modal.modal-5>Update</b-button>
-                                    <b-modal id="modal-5" title="Update FAQs">
-                                        <b-form-input id="input-small" class="mb-2" placeholder="Question">
-                                        </b-form-input>
-                                        <b-form-textarea id="textarea-default" class="mb-2" placeholder="Answer">
-                                        </b-form-textarea>
-                                    </b-modal>
-                                </div>
-                                <div>
-                                    <b-button v-b-modal.modal-6>Delete</b-button>
-                                    <b-modal id="modal-6" title="BootstrapVue">
-                                        <p class="text-center">Do you want to delete this FAQ?</p>
-                                    </b-modal>
+                            <div class="modal fade" id="editFaqs" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="">Question</label>
+                                                <input type="text" class="form-control" placeholder="Enter Question"
+                                                    v-model="formEdit.question">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Answer</label>
+                                                <textarea class="form-control" rows="3" placeholder="Enter Answer"
+                                                    v-model="formEdit.answer"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary"
+                                                @click="save()">Update</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -54,25 +115,74 @@
 
 <script>
     export default {
+        props: ['faqs'],
         data() {
             return {
-                // Note 'isActive' is left out and will not appear in the rendered table
-                fields: [{
-                        key: 'question',
-                        sortable: true
-                    },
-                    {
-                        key: 'answer',
-                        sortable: false,
-                        variant: 'danger'
-                    },
-                ],
-                items: [{
-                    isActive: true,
-                    question: 'Unsa ang tinda?',
-                    answer: 'Ang tinda usa ka locally-developed Q-Commerce platform. Naay duha ka existing apps- tinda Buyer App and tinda Seller App - serving both buyers and sellers.'
-                }]
+                products: {},
+                form: {
+                    question: null,
+                    answer: null,
+                },
+                formEdit: {
+                    question: null,
+                    answer: null,
+                },
+                selectedId: null
             }
+        },
+        created() {
+            this.getProducts();
+        },
+        methods: {
+        getProducts() {
+              this.axios.get('http://127.0.0.1:8000/api/faqs')
+                  .then(response => {
+                      this.products = response.data;
+                  });
+            },
+            submit() {
+                $('#addFAQ').modal('hide');
+                const vm = this;
+                axios.post('/faqs', this.form)
+                    .then(function (response) {
+                        vm.faqsList.push(response.data.data);
+                        vm.form.question = null
+                        vm.form.answer = null
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+            edit(item) {
+                console.log(item)
+                this.formEdit.question = item.question;
+                this.formEdit.answer = item.answer;
+                this.selectedId = item.id
+                $('#editFaqs').modal('show');
+
+            },
+            save() {
+                $('#editFaqs').modal('hide');
+                const vm = this;
+                axios.put(`/faqs/${vm.selectedId}`, this.formEdit)
+                    .then(function (response) {
+                        alert('Faqs has been sucessfully saved')
+                        location.reload();
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
+            remove(item, index) {
+                const vm = this;
+                axios.delete(`/faqs/${item.id}`)
+                    .then(function (response) {
+                        vm.faqsList.splice(index, 1)
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    });
+            },
         }
     }
 </script>

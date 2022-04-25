@@ -28,6 +28,7 @@
         "bootstrap-vue": "^2.22.0",
         "firebase": "^9.6.11",
         "firebase-auth": "^0.1.2",
+        "vue-axios": "^3.4.1",
         "vue-router": "^3.5.3"
     }
 }
