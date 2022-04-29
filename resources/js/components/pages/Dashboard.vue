@@ -16,7 +16,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Banner</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">3</div>
+                                            <div class="mb-0 font-weight-bold text-gray-800">Images</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-flag fa-2x text-gray-300"></i>
@@ -31,8 +31,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Stores</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">15</div>
+                                                Store</div>
+                                            <div class="mb-0 font-weight-bold text-gray-800">Images</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-store fa-2x text-gray-300"></i>
@@ -46,11 +46,11 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Testimonials
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Testimonial
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">6</div>
+                                                    <div class="mb-0 mr-3 font-weight-bold text-gray-800">Clients & Feedbacks</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -68,7 +68,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 FAQs</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                                            <div class="mb-0 font-weight-bold text-gray-800">Queries and Answers</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-question fa-2x text-gray-300"></i>
@@ -85,14 +85,3 @@
     </div>
 </template>
 
-<script>
-    export default {
-        data(){
-            return{
-                    url: {
-                    href: '/resources/views/layouts/app'
-                },
-            }
-        },
-    }
-</script>

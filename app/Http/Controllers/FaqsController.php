@@ -74,8 +74,8 @@ class FaqsController extends Controller
     public function update(FaqsPostRequest $faqsRequest, $id)
     {
         try {
-            $faq = Faqs::find($id);
-            $posting = $faq->update($faqsRequest->all());
+            $faqs = Faqs::find($id);
+            $posting = $faqs->update($faqsRequest->all());
             return response()->json(['message' => 'Faqs has been sucessfully saved', 'data' => $posting]);
         } catch(\Exception $e) {
             return response()->json(['message' => $e->getMessage()]);

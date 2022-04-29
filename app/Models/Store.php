@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Store extends Model
 {
     use HasFactory;
+    protected $table = 'store';
     protected $fillable = [
-        'description'
+        'filename', 'url'
     ];
 }

@@ -10,7 +10,7 @@
                     </div>
                     <div class="mb-4">
                         <div>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                 data-bs-target="#addTestimonial">
                                 Add Testimonial
                             </button>
@@ -49,8 +49,8 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th width="150" scope="col">Witness</th>
-                                            <th width="800" scope="col">Testimonial</th>
+                                            <th width="150" scope="col">Client</th>
+                                            <th width="700" scope="col">Testimonial</th>
                                             <th width="100" scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -59,7 +59,7 @@
                                             <td>{{ item.witness }}</td>
                                             <td>{{ item.testimonial }}</td>
                                             <td>
-                                                <button class="btn btn-secondary btn-sm" @click="edit(item)"><i
+                                                <button class="btn btn-warning btn-sm" @click="edit(item)"><i
                                                         class="fa fa-edit"></i></button>
                                                 <button class="btn btn-danger btn-sm" @click="remove(item,index)"><i
                                                         class="fa fa-trash"></i></button>
@@ -161,7 +161,12 @@
                 const vm = this;
                 axios.put(`/api/testimonial/${vm.selectedId}`, this.formEdit)
                     .then(function (response) {
-                        swal("Update Success!", "This testimony has been updated successfully!", "success");
+                        swal({
+                            title: "Update Success!",
+                            text: "This testimony has been updated successfully!",
+                            icon: "success",
+                            button: false,
+                        });
                         location.reload();
                     })
                     .catch(function (error) {
