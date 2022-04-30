@@ -27,7 +27,7 @@ class BannerController extends Controller
             $path = Storage::disk('minio')->put('banner', $request->file('file'));
             Storage::disk('minio')->setVisibility($path, 'public');
             $fileUpload->filename = basename($path);
-            $fileUpload->url = Storage::disk('minio')->url($path);
+            $fileUpload->url = $path;
             $fileUpload->save();
 
             return response()->json(['success'=>'File uploaded successfully.']);
@@ -37,8 +37,7 @@ class BannerController extends Controller
    public function destroy($id)
    {
        $banner = Banner::find($id);
-       $filename = Banner::select('filename')->where('id', $id)->get();
-       Storage::disk('minio')->delete($filename);
+       Storage::disk('minio')->delete($banner->url);
        $banner->delete();
        return response()->json(['message' => 'Testimony has been sucessfully deleted']);
    }

@@ -41,12 +41,14 @@ class StoreController extends Controller
             'file' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:500|dimensions:max_width=7559,max_height=2268'
          ]);
          $fileUpload = new Store;
+
          if($request->file()) {
             $path = Storage::disk('minio')->put('store', $request->file('file'));
             Storage::disk('minio')->setVisibility($path, 'public');
             $fileUpload->filename = basename($path);
-            $fileUpload->url = Storage::disk('minio')->url($path);
+            $fileUpload->url = $path;
             $fileUpload->save();
+
             return response()->json(['success'=>'File uploaded successfully.']);
          }
     }
@@ -94,8 +96,7 @@ class StoreController extends Controller
     public function destroy($id)
     {
         $store = Store::find($id);
-        $filename = Store::select('filename')->where('id', $id)->get();
-        Storage::disk('minio')->delete('files', $filename);
+        Storage::disk('minio')->delete($store->url);
         $store->delete();
         return response()->json(['message' => 'Store has been sucessfully deleted']);
     }

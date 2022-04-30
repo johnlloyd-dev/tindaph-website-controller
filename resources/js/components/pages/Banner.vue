@@ -41,7 +41,7 @@
                                 <div class="card mb-4">
                                     <div class="card-body">
                                         <div class="mb-4">
-                                            <img class="w-100 rounded" :src="item.url"
+                                            <img class="w-100 rounded" :src="item.full_url"
                                                 fluid>
                                         </div>
                                         <div class="d-flex justify-content-center mb-2">
