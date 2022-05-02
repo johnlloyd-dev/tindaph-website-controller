@@ -38,7 +38,7 @@ class StoreController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:500|dimensions:max_width=7559,max_height=2268'
+            'file' => 'required|mimes:jpg,jpeg,png|max:50|dimensions:max_width=1350,max_height=825'
          ]);
          $fileUpload = new Store;
 
