@@ -49,6 +49,7 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
+                                            <th width="80" scope="col">#</th>
                                             <th width="150" scope="col">Client</th>
                                             <th width="700" scope="col">Testimonial</th>
                                             <th width="100" scope="col">Action</th>
@@ -56,6 +57,7 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(item, index) of products" :key="item.id">
+                                            <td>{{ index+1 }}</td>
                                             <td>{{ item.witness }}</td>
                                             <td>{{ item.testimonial }}</td>
                                             <td>
@@ -109,7 +111,6 @@
 
 <script>
     export default {
-        props: ['testimony'],
         data() {
             return {
                 products: {},
@@ -121,7 +122,7 @@
                     witness: null,
                     testimonial: null,
                 },
-                selectedId: null
+                selectedId: null,
             }
         },
         created() {

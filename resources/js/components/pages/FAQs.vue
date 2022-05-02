@@ -53,6 +53,7 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
+                                            <th width="80" scope="col">#</th>
                                             <th width="300" scope="col">Question</th>
                                             <th width="600" scope="col">Answer</th>
                                             <th width="100" scope="col">Action</th>
@@ -60,6 +61,7 @@
                                     </thead>
                                     <tbody>
                                         <tr v-for="(item, index) of products" :key="item.id">
+                                            <td>{{ index+1 }}</td>
                                             <td>{{ item.question }}</td>
                                             <td>{{ item.answer }}</td>
                                             <td>
