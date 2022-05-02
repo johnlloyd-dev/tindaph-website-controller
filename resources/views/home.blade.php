@@ -1,4 +1,4 @@
 @extends('layouts.app')
 @section('content')
-<router-view :testimony="{{ $testimony }}"></router-view>
+    <router-view></router-view>
 @endsection

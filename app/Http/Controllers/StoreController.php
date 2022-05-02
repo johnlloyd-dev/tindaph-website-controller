@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller
 {
@@ -14,7 +15,8 @@ class StoreController extends Controller
      */
     public function index()
     {
-        //
+        $store = Store::orderby('id', 'asc')->get();
+        return response()->json($store);
     }
 
     /**
@@ -35,7 +37,20 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'file' => 'required|mimes:jpg,jpeg,png|max:50|dimensions:max_width=1350,max_height=825'
+         ]);
+         $fileUpload = new Store;
+
+         if($request->file()) {
+            $path = Storage::disk('minio')->put('store', $request->file('file'));
+            Storage::disk('minio')->setVisibility($path, 'public');
+            $fileUpload->filename = basename($path);
+            $fileUpload->url = $path;
+            $fileUpload->save();
+
+            return response()->json(['success'=>'File uploaded successfully.']);
+         }
     }
 
     /**
@@ -78,8 +93,11 @@ class StoreController extends Controller
      * @param  \App\Models\Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Store $store)
+    public function destroy($id)
     {
-        //
+        $store = Store::find($id);
+        Storage::disk('minio')->delete($store->url);
+        $store->delete();
+        return response()->json(['message' => 'Store has been sucessfully deleted']);
     }
 }

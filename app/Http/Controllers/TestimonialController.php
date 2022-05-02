@@ -15,8 +15,9 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        $testimony = Testimonial::all();
-        return view('home',compact('testimony'));
+        $products = Testimonial::orderby('id', 'asc')->get();
+
+        return response()->json($products);
     }
 
     /**
@@ -71,9 +72,10 @@ class TestimonialController extends Controller
      * @param  \App\Models\Testimonial  $testimonial
      * @return \Illuminate\Http\Response
      */
-    public function update(TestimonyPostRequest $testimonyPostingRequest, Testimonial $testimonial)
+    public function update(TestimonyPostRequest $testimonyPostingRequest, $id)
     {
         try {
+            $testimonial = Testimonial::find($id);
             $posting = $testimonial->update($testimonyPostingRequest->all());
             return response()->json(['message' => 'Testimonial has been sucessfully saved', 'data' => $posting]);
         } catch(\Exception $e) {
@@ -87,8 +89,9 @@ class TestimonialController extends Controller
      * @param  \App\Models\Testimonial  $testimonial
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Testimonial $testimonial)
+    public function destroy($id)
     {
+        $testimonial = Testimonial::find($id);
         $testimonial->delete();
         return response()->json(['message' => 'Testimony has been sucessfully deleted']);
     }

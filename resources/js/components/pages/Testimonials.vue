@@ -10,7 +10,7 @@
                     </div>
                     <div class="mb-4">
                         <div>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                 data-bs-target="#addTestimonial">
                                 Add Testimonial
                             </button>
@@ -49,17 +49,19 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th width="150" scope="col">Witness</th>
-                                            <th width="800" scope="col">Testimonial</th>
+                                            <th width="80" scope="col">#</th>
+                                            <th width="150" scope="col">Client</th>
+                                            <th width="700" scope="col">Testimonial</th>
                                             <th width="100" scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(item, index) in testimonyList" :key="item.id">
+                                        <tr v-for="(item, index) of products" :key="item.id">
+                                            <td>{{ index+1 }}</td>
                                             <td>{{ item.witness }}</td>
                                             <td>{{ item.testimonial }}</td>
                                             <td>
-                                                <button class="btn btn-secondary btn-sm" @click="edit(item)"><i
+                                                <button class="btn btn-warning btn-sm" @click="edit(item)"><i
                                                         class="fa fa-edit"></i></button>
                                                 <button class="btn btn-danger btn-sm" @click="remove(item,index)"><i
                                                         class="fa fa-trash"></i></button>
@@ -109,10 +111,9 @@
 
 <script>
     export default {
-        props: ['testimony'],
         data() {
             return {
-                testimonyList: this.testimony,
+                products: {},
                 form: {
                     witness: null,
                     testimonial: null,
@@ -121,18 +122,28 @@
                     witness: null,
                     testimonial: null,
                 },
-                selectedId: null
+                selectedId: null,
             }
         },
+        created() {
+            this.getProducts();
+        },
         methods: {
+            getProducts() {
+              this.axios.get('/api/testimonial')
+                  .then(response => {
+                      this.products = response.data;
+                  });
+            },
             submit() {
                 $('#addTestimonial').modal('hide');
                 const vm = this;
-                axios.post('/testimonial', this.form)
+                axios.post('/api/testimonial', this.form)
                     .then(function (response) {
-                        vm.testimonyList.push(response.data.data);
-                        vm.form.witness = null
-                        vm.form.testimonial = null
+                        vm.products.push(response.data.data);
+                        vm.form.witness = null;
+                        vm.form.testimonial = null;
+                        swal("Add Success!", "A testimony has been added successfully!", "success");
                     })
                     .catch(function (error) {
                         console.log(error)
@@ -142,16 +153,21 @@
                 console.log(item)
                 this.formEdit.witness = item.witness;
                 this.formEdit.testimonial = item.testimonial;
-                this.selectedId = item.id
+                this.selectedId = item.id;
                 $('#editModal').modal('show');
 
             },
             save() {
                 $('#editModal').modal('hide');
                 const vm = this;
-                axios.put(`/testimonial/${vm.selectedId}`, this.formEdit)
+                axios.put(`/api/testimonial/${vm.selectedId}`, this.formEdit)
                     .then(function (response) {
-                        alert('Testimony has been sucessfully saved')
+                        swal({
+                            title: "Update Success!",
+                            text: "This testimony has been updated successfully!",
+                            icon: "success",
+                            button: false,
+                        });
                         location.reload();
                     })
                     .catch(function (error) {
@@ -160,9 +176,10 @@
             },
             remove(item, index) {
                 const vm = this;
-                axios.delete(`/testimonial/${item.id}`)
+                axios.delete(`/api/testimonial/${item.id}`)
                     .then(function (response) {
-                        vm.testimonyList.splice(index, 1)
+                        vm.products.splice(index, 1);
+                        swal("Delete Success!", "This testimony has been deleted successfully!", "success");
                     })
                     .catch(function (error) {
                         console.log(error)

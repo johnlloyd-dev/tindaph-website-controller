@@ -77,6 +77,10 @@ body {
     background-color: #fff
 }
 
+/* #app{
+    font-family: 'Poppins', sans-serif;
+} */
+
 [tabindex="-1"]:focus:not(:focus-visible) {
     outline: 0 !important
 }
@@ -12570,5 +12574,5 @@ body.sidebar-toggled footer.sticky-footer {
 .nav-class i,
 .nav-class span{
     /* content: "JLLLL"; */
-    color: white !important;
+    color: #73A448 !important;
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Faqs;
 use Illuminate\Http\Request;
+use App\Http\Requests\FaqsPostRequest;
 
 class FaqsController extends Controller
 {
@@ -14,7 +15,9 @@ class FaqsController extends Controller
      */
     public function index()
     {
-        //
+        $products = Faqs::orderby('id', 'asc')->get();
+
+        return response()->json($products);
     }
 
     /**
@@ -33,9 +36,10 @@ class FaqsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FaqsPostRequest $faqsRequest, Faqs $faqs)
     {
-        //
+        $posting = $faqs::create($faqsRequest->all());
+        return response()->json(['message' => 'Faq has been sucessfully saved', 'data' => $posting]);
     }
 
     /**
@@ -67,9 +71,15 @@ class FaqsController extends Controller
      * @param  \App\Models\Faqs  $faqs
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Faqs $faqs)
+    public function update(FaqsPostRequest $faqsRequest, $id)
     {
-        //
+        try {
+            $faqs = Faqs::find($id);
+            $posting = $faqs->update($faqsRequest->all());
+            return response()->json(['message' => 'Faqs has been sucessfully saved', 'data' => $posting]);
+        } catch(\Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -78,8 +88,10 @@ class FaqsController extends Controller
      * @param  \App\Models\Faqs  $faqs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Faqs $faqs)
+    public function destroy($id)
     {
-        //
+        $faqs = Faqs::find($id);
+        $faqs->delete();
+        return response()->json(['message' => 'Testimony has been sucessfully deleted']);
     }
 }
